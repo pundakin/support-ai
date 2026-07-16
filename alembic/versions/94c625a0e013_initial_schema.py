@@ -1,8 +1,8 @@
-"""initial schema: tickets, history
+"""initial_schema
 
-Revision ID: 78f531079b00
+Revision ID: 94c625a0e013
 Revises: 
-Create Date: 2026-07-14 07:43:09.081677
+Create Date: 2026-07-15 22:52:33.552561
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision: str = '78f531079b00'
+revision: str = '94c625a0e013'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -30,7 +30,7 @@ def upgrade() -> None:
     sa.Column('tags', postgresql.ARRAY(sa.String()), nullable=True),
     sa.Column('status', sa.Enum('NEW', 'IN_PROGRESS', 'RESOLVED', 'CLOSED', name='ticket_status'), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
-    sa.Column('updates_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_tickets'))
     )
     op.create_index(op.f('ix_tickets_thread_id'), 'tickets', ['thread_id'], unique=False)
